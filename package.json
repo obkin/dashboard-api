@@ -1,0 +1,11 @@
+{
+  "name": "dashboard-api",
+  "version": "1.0.0",
+  "description": "API for personal scientific project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "obkin",
+  "license": "ISC"
+}
