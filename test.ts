@@ -1,51 +1,57 @@
-let a: number = 5; 
-let b = 'str';
+const a: number = 5;
+const b: string = 'str';
+const d: boolean = true;
 
-
-let c: number = a + Number(b);
-
-// ------
-
-let d = true;
-let e: boolean = false;
+let c: string = a + b + d;
 
 // ---------
 
-let arrStr: string[] = ['str1', 'str2', 'str3'];
-let arrNum: number[] = [1, 2, 3];
-let arrBool: boolean[] = [true, false, true];
+let arr: (string | number | boolean)[] = ['John', 'Walter', 'Kate', 1, false];
 
+let names: string[] = ['John', 'Walter', 'Kate'];
+let numbers: number[] = [1, 2, 3];
+let booleans: boolean[] = [true, true, false];
 
-let someArr: [number, string, boolean] = [1, 'str2', true];
+let someArr: any[] = ['str', 1, true, {link: 'https://youtube.com'}]; // types is absent
 
-someArr.push('some');
-someArr.pop();
+let tuple: [number, number, string, boolean, number] = [1, 5, 'str', false, 1];
+let tupleEx: [number, string, boolean, number] = [875, 'John', false, 28];
 
 // ---------
 
-let f: any = 'str';
-    f = 5;
-    f = true;
+function greet(name: string): string {
+    return name + ', hello!'; // John, hello!
+}
+
+console.log(names.map((name: string) => greet(name)));
+
+// ---------
+
+interface HelloFunc {
+    hello: {
+        hi: string;
+        name: string;
+    };
+}
+
+function helloFunc(obj: HelloFunc): string {
+    return obj.hello.hi + ', ' + obj.hello.name;
+}
 
 // ---
 
-let anyArr: any[] = [1, 'str', true];
-
-// ---------
-
-
-function greet(name: string): string {
-    return name + ', hello!';
+function hello(hello: { hi: string, name?: string }): string {
+    if (hello.name == 'string') {
+        return hello.hi + ',' + hello.name + '!';
+    } else {
+        throw new Error(hello.name + ' - is undefined');
+    }
 }
 
-// ---------
-
-arrStr.map(str => {
-
-});
+console.log(hello({hi: 'Hello', name: 'John'}));
 
 // ---------
 
-function coord(coords: { lat: number, long?: number }): number | undefined {
-    return coords ? 1 : undefined;
-}
+let f: any = 5;
+    f = 'str',
+    f = true;
