@@ -1,64 +1,80 @@
-type coords = { lat: number, lon: number };
+// let a: string = 'str';
 
-interface ICoords {
-    lat: number;
-    lon: number;
-}
-
-function compute(coords: ICoords) {
-
-}
+// const b = 'str';
+// const d = 5;
+// const e = true;
+// const f = {};
 
 // ---------
 
-type ID = string | number;
+let j: 'str' = 'str';
 
-type UniqueID = 'lost' | 'found';
+// ---------
+
+type directions = 'left' | 'right';
+
+function move(direction: directions): 1 | -1 | 0 {
+    switch (direction) {
+        case 'left':
+            return -1;
+        case 'right':
+            return 1
+        default:
+            return 0;
+    }
+}
+
+move('left');
+
+// ---------
+
+/*
+
+interface IConnection {
+    host: string;
+    port: number;
+}
+
+function connect(params: IConnection | 'default') {
+    if (typeof params == 'object') {
+        startConnection(params);
+    } else if (params == 'default') {
+        startConnection({ host: 'http://localhost', port: 3000 });
+    } else {
+        throw new Error('Set other settings');
+    }
+}
+
+connect('default');
+
+connect({ host: 'http://localhost', port: 3000 });
+
+
+function startConnection(p: any) {
+
+}
+
+*/
+
+// ---------
+
+const connection = {
+    host: 'localhost',
+    protocol: 'https' as 'https'
+}
+
+function connect(host: string, protocol: 'http' | 'https') {
+
+}
+
+connect(connection.host, connection.protocol);
+
+// ---------
+
+let b: any = 5;
+let c = b as number; 
 
 // ---
 
-interface Animal {
-    name: string;
-    tail: boolean;
-}
-
-interface Dog extends Animal {
-    kind: string;
-}
-
-const dog1: Dog = {
-    name: 'Jack',
-    tail: false,
-    kind: 'dog'
-}
-
-interface Dog {
-    age?: number;
-}
-
-const dog2: Dog = {
-    name: 'William',
-    tail: true,
-    kind: 'dog',
-    age: 3
-}
-
-// ---
-
-type tAnimal = {
-    name: string,
-    tail: boolean;
-}
-
-type tDog = tAnimal & {
-    kind?: string;
-    age: number;
-}
-
-const dog3: tDog = {
-    name: 'Niky',
-    tail: true,
-    age: 2
-}
-
-type userOrUsers = string | string[];
+let d: any = 5;
+let e = <number>d;
