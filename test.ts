@@ -1,67 +1,57 @@
-type coords = { lat: number, long: number }; 
+const a: number | string = 1;
 
-interface ICoords {
-    lat: number;
-    long: number;
-}
-
-type ID = string | number;
-
-type UniqueID = 'lost' | 'found';
-
-function compute(coords: ICoords) {
-
-}
+let b: number | boolean | string = '';
+    b = 5;
+    b = true;
 
 // ---------
 
-type myString = string;
+type ID = number | string | boolean;
 
-// ---------
-
-/*
-
-interface Animal {
-    name: string;
-}
-
-interface Dog extends Animal {
-    tail?: boolean
-}
-
-const dog: Dog = {
-    name: 'Jack',
-    // tail: true
-};
-
-*/
-
-// ---------
-
-type Animal = {
-    name: string;
-}
-
-type Dog = Animal & {
-    tail: boolean;
-}
-
-const dog: Dog = {
-    name: 'Maison',
-    tail: false
+function printA(id: ID) {
+    if (typeof id == 'number') {
+        console.log(id * 10); // number
+    } else if (typeof id === 'string') {
+        console.log(id.toUpperCase()); // string
+    } else {
+        console.log(id); // boolean
+    }
 }
 
 // ---------
 
 interface User {
     name: string;
-}
-
-interface User {
     age: number;
 }
 
-const user: User = {
-    name: 'Olya',
-    age: 21
+function helloUser(userOrUsers: string | string[] | User) {
+    if (Array.isArray(userOrUsers)) {
+        userOrUsers.map(user => {
+            return console.log(user + ', hello!');
+        });
+    } else if (typeof userOrUsers == 'string') {
+        return userOrUsers + ', hello!';
+    } else {
+        return userOrUsers.name + ', hello!'
+    }
+}
+
+console.log(helloUser({ name: 'John', age: 20 }));
+helloUser(['Wolfgang', 'Katty', 'Chris']);
+console.log(helloUser('Jenny'));
+
+
+// ---------
+
+type user = string | string[] | User;
+
+function getUserName(user: user) {
+    if (Array.isArray(user)) {
+        return user;
+    } else if (typeof user == 'string') {
+        return user;
+    } else {
+        return user.name;
+    }
 }
