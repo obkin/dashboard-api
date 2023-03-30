@@ -1,30 +1,29 @@
-// let a: string = 'str';
+let a = 5;
 
-// const b = 'str';
-// const d = 5;
-// const e = true;
-// const f = {};
+const b = 'str';
 
-// ---------
-
-let j: 'str' = 'str';
+let j: 'someStr' | 'str' | 5 = 'someStr';
 
 // ---------
 
 type directions = 'left' | 'right';
 
-function move(direction: directions): 1 | -1 | 0 {
+function move(direction: directions): -1 | 1 | 0 {
     switch (direction) {
         case 'left':
             return -1;
+            break;
         case 'right':
-            return 1
-        default:
+            return 1;
+            break;
+        default: 
             return 0;
+            break;
     }
 }
 
 move('left');
+move('right');
 
 // ---------
 
@@ -37,20 +36,14 @@ interface IConnection {
 
 function connect(params: IConnection | 'default') {
     if (typeof params == 'object') {
-        startConnection(params);
-    } else if (params == 'default') {
-        startConnection({ host: 'http://localhost', port: 3000 });
+        startConnection(params.host, params.port);
     } else {
-        throw new Error('Set other settings');
+        startConnection('localhost', 3000);
     }
 }
 
-connect('default');
 
-connect({ host: 'http://localhost', port: 3000 });
-
-
-function startConnection(p: any) {
+function startConnection(h: string, p: number) {
 
 }
 
@@ -58,23 +51,18 @@ function startConnection(p: any) {
 
 // ---------
 
-const connection = {
+interface IParams {
+    host: string;
+    protocol: 'https' | 'http';
+}
+
+const connectionParams = {
     host: 'localhost',
     protocol: 'https' as 'https'
 }
 
-function connect(host: string, protocol: 'http' | 'https') {
+function connect(host: string, protocol: 'https' | 'http') {
 
 }
 
-connect(connection.host, connection.protocol);
-
-// ---------
-
-let b: any = 5;
-let c = b as number; 
-
-// ---
-
-let d: any = 5;
-let e = <number>d;
+connect(connectionParams.host, connectionParams.protocol);
