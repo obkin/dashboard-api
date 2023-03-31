@@ -1,68 +1,35 @@
-type direction = 'left' | 'right';
-
-enum Directions {
-    LEFT = 'left',
-    RIGHT = 'right',
-    TOP = 'top',
-    DOWN = 'down'
+interface HasLength {
+    length: number;
 }
 
-function move(direction: Directions) {
-    switch (direction) {
-        case Directions.DOWN:
-            return -1;
-        case Directions.LEFT:
-            return -1;
-        case Directions.RIGHT:
-            return 1;
-        case Directions.TOP:
-            return 1;
-        default:
-            return 0;
+function log<T1 extends HasLength, T2>(arg: T1, arr: T2[]): T2[] {
+    arg.length
+
+    return arr;
+}
+
+log<HasLength, number>({ length: 5 }, [1, 5, 7]);
+
+// log<string, number>('str', [1, 5, 7]);
+// log<number, string>(5, ['str1', 'str2', 'str3']);
+// log<boolean, boolean>(true, [false, true, false]);
+
+// ---------
+
+interface User {
+    name: string;
+    age?: number;
+    bid: <TYPE>(sum: TYPE) => boolean;
+}
+
+const obj: User = {
+    name: 'Jack',
+    age: 19,
+    bid: (sum) => {
+        return true;
     }
 }
 
-move(Directions.DOWN);
-move(Directions.LEFT);
-move(Directions.RIGHT);
-move(Directions.TOP);
-
-// ---------
-
-enum Host {
-    LOCALHOST = 'localhost',
-    HOST = 'myhost'
-}
-
-let a = 5;
-    a *= 5;
-
-enum Protocol {
-    HTTP = 'ast'.length,
-    HTTPS = Math.floor(0.9),
-    AKMS = a
-}
-
-function connect(host: Host, protocol: Protocol) {
-
-}
-
-connect(Host.LOCALHOST, Protocol.HTTP);
-
-// ---------
-
-const enum STATUS {
-    PAID = 600,
-    REJECTED,
-    REFUND
-}
-
-const b = STATUS.REFUND;
-
-// ---------
-
-function checkObj(obj: { LEFT: string }) {
-
-}
-
-checkObj(Directions);
+obj.bid(12);
+obj.bid('12');
+obj.bid([1, 2, 4]);
