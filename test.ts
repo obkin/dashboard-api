@@ -1,37 +1,67 @@
-interface HasLength {
-    length: number;
+
+class Coord {
+    message = '1';
+    lat: number;
+    long: number;
+
+        computeDistance(newLat: number, newLong: number): number {
+            return (this.lat - newLat) + (this.long - newLong);
+        }
+
+    constructor(lat: number, long: number) {
+        this.lat = lat;
+        this.long = long;
+        console.log(this.message);
+    }
 }
 
-function log<T1 extends HasLength, T2>(arg: T1, arr: T2[]): T2[] {
-    arg.length
-    arr.length
+const poin = new Coord(0, 1);
 
-    return arr;
+// poin.lat = 1;
+// poin.long = 2;
+ 
+// ---------
+
+const nationallity = 'Ukrainian';
+
+class MapLocation extends Coord {
+    message = '2';
+
+    _name: string;
+
+    get name() {
+        return this._name;
+    }
+
+    set name(arg: string) {
+        this._name = arg + `_login`;
+    }
+
+    override computeDistance(newLat: number, newLong: number): number {
+        console.log(this._name);
+        return (this.lat - newLat) + (this.long - newLong);
+    }
+
+    constructor(lat: number, long: number, name: string) {
+        super(lat, long);
+        this.name = name;
+        console.log(this.message);
+    }
 }
 
-log<HasLength, number>({ length: 9 }, [1, 3, 4]);
+const a = new MapLocation(0, 1, 'str');
 
-// log<string, number>('str1', [1, 5, 6]);
-// log<number, string>(1, ['str1', 'str2']);
-// log<boolean, boolean>(true, [false, true, false]);
+a.name = 'Yakrik';
+a.name;
 
 // ---------
 
-interface User {
-    name: string,
-    age?: number;
-
-    bid: <TYPE>(sum: TYPE) => boolean;
+interface LoggerService {
+    log: (s: string) => void; 
 }
 
-const user1: User = {
-    name: 'John',
-    age: 21,
-
-    bid: <TYPE>(sum: TYPE) => {
-        return true;
+class Logger implements LoggerService {
+    log(s: string): void {
+        console.log(s);
     }
-};
-
-user1.bid<number>(100);
-user1.bid<string>('str');
+}
