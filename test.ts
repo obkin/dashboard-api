@@ -3,7 +3,14 @@ class Coord {
     lat: number;
     long: number;
 
+    protected test() {
+        if (this.lat) {
+            return true;
+        }
+    }
+
     computeDistance(newLat: number, newLong: number) {
+        console.log(this.test());
         return (this.lat - newLat) + (this.long - newLong);
     }
 
@@ -30,8 +37,8 @@ console.log(new Coord(14, 22));
 // ---------------------------
 
 class MapLocation extends Coord {
-    message = '2';
-    _name: string;
+    #message = '2';
+    private _name: string;
 
     get name() {
         return this._name + ', hello!';
@@ -49,16 +56,18 @@ class MapLocation extends Coord {
     constructor(lat: number, long: number, name: string) {
         super(lat, long);
         this._name = name;
-        console.log(this.message);
+        console.log(this.#message);
+        console.log(this.test());
     }
 }
 
 const point3 = new MapLocation(123, 657, 'Jack');
 console.log(point3);
+// point3.test();
 
 console.log(point3.name);
 point3.name = 'yarik'
-console.log(point3._name);
+// console.log(point3._name);
 
 // ---------------------------
 
@@ -66,8 +75,63 @@ interface LoggerService {
     log: (s: string) => void;
 }
 
-class Logger implements LoggerService {
-    log(arg: string): void {
+class Logger {
+    private log(arg: string): void {
         console.log(arg);
     }
+
+    #b: number;
+    private a: string;
 }
+
+const myLogger = new Logger();
+// myLogger.a;
+// myLogger.#b;
+// myLogger.log('str');
+
+// ---------------------------
+
+class MyClass<TYPE> {
+    a: TYPE;
+}
+
+const someClass = new MyClass<string>();
+someClass.a;
+
+// MyClass.a;
+// MyClass.log();
+
+// ---------------------------
+
+abstract class Base {
+    print(s: string) {
+        console.log(s);
+    }
+
+    abstract error(s: string): void;
+}
+
+// const cl = new Base();
+
+class BaseExtended extends Base {
+    error(s: string): void {
+        throw new Error(`error > ${s}`);
+    }
+}
+
+const cl = new BaseExtended();
+cl.print('str');
+
+// ---------------------------
+
+class Animal {
+    name: string;
+}
+
+class Dog { 
+    name: string;
+    tail: boolean;
+}
+
+const puppy: Animal = new Dog();
+puppy.name;
