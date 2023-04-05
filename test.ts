@@ -1,38 +1,27 @@
 class Coord {
-    message = '1';
+    #message = '1';
     lat: number;
     long: number;
 
-    protected test() {
-        if (this.lat) {
-            return true;
-        }
+    protected computeDistance(newLat: number, newLong: number) {
+        return 0;
     }
 
-    computeDistance(newLat: number, newLong: number) {
-        console.log(this.test());
-        return (this.lat - newLat) + (this.long - newLong);
+    private test() {
+        console.log('Everything is OK');
     }
 
     constructor(lat: number, long: number) {
         this.lat = lat;
         this.long = long;
-        console.log(this.message);
+        // console.log(this.message);
     }
 }
 
-const point1 = new Coord(506, 708);
-const point2 = new Coord(134, 534);
-// console.log(typeof point1);
-// console.log(typeof point1);
-
-// point.lat = 0;
-// point.long = 1;
-
-console.log(point1);
-console.log(point2);
-console.log(new Coord(1, 2));
-console.log(new Coord(14, 22));
+const instCoord = new Coord(243, 564);
+// instCoord.lat = 124;
+// instCoord.long = 657;
+console.log(instCoord);
 
 // ---------------------------
 
@@ -44,94 +33,139 @@ class MapLocation extends Coord {
         return this._name + ', hello!';
     }
 
-    set name(n: string) {
-        this._name = n + '_login';
+    set name(s: string) {
+        this._name = s + '_cool';
     }
 
     override computeDistance(newLat: number, newLong: number) {
-        console.log(this._name);
-        return (this.lat - newLat) + (this.long - newLong);
+        console.log(this.name);
+        return (newLat - this.lat) + (newLong - this.long);
     }
 
     constructor(lat: number, long: number, name: string) {
         super(lat, long);
-        this._name = name;
-        console.log(this.#message);
-        console.log(this.test());
+        this.name = name;
+        // console.log(this.message);
     }
 }
 
-const point3 = new MapLocation(123, 657, 'Jack');
-console.log(point3);
-// point3.test();
+const newMapLoc = new MapLocation(435, 135, 'Talor');
+console.log(newMapLoc.computeDistance(123, 234));
 
-console.log(point3.name);
-point3.name = 'yarik'
-// console.log(point3._name);
+console.log(newMapLoc.name);
+newMapLoc.name = 'John';
+console.log(newMapLoc.name);
+
+// ---------------------------
+
+class some extends MapLocation {
+    #message = '3';
+    private _age: number;
+
+    get age() {
+        return this._age;
+    }
+
+    set age(s: number) {
+        this._age = s + 1;
+    }
+
+    constructor(lat: number, long: number, name: string, age: number) {
+        super(lat, long, name);
+        this._age = age;
+        console.log(this.#message);
+        // console.log(this.message);
+    }
+}
+
+const newInst = new some(123, 432, 'str', 20);
+// console.log(newInst.age);
+// newInst.age = 20
+// console.log(newInst.age);
 
 // ---------------------------
 
 interface LoggerService {
-    log: (s: string) => void;
+    log: (arg: string) => string;
 }
 
-class Logger {
-    private log(arg: string): void {
-        console.log(arg);
+class Logger implements LoggerService {
+    public log(arg: string): string {
+        return 'gg';
     }
+    private a: number;
 
-    #b: number;
-    private a: string;
+    #b: string;
 }
 
-const myLogger = new Logger();
-// myLogger.a;
-// myLogger.#b;
-// myLogger.log('str');
+const logger = new Logger();
+logger.log('str');
 
 // ---------------------------
 
 class MyClass<TYPE> {
     a: TYPE;
+
+    static a = 1;
+
+    static log() {
+
+    }
+
+    static {
+
+    }
 }
 
-const someClass = new MyClass<string>();
-someClass.a;
+MyClass.a;
+MyClass.log();
 
-// MyClass.a;
-// MyClass.log();
+const instClass = new MyClass<string>();
+console.log(typeof instClass.a);
 
 // ---------------------------
 
-abstract class Base {
-    print(s: string) {
-        console.log(s);
-    }
-
-    abstract error(s: string): void;
+class User<TYPE> {
+    age: TYPE;
 }
 
-// const cl = new Base();
+const user1 = new User<number>();
+user1.age;
 
-class BaseExtended extends Base {
-    error(s: string): void {
-        throw new Error(`error > ${s}`);
+// ---------------------------
+
+abstract class MyOwnClass {
+    print(arg: string): void {
+        console.log(arg);
     }
 }
 
-const cl = new BaseExtended();
-cl.print('str');
+class UserClass extends MyOwnClass {
+    log(text: string, time: Date): void {
+
+    }
+}
+
+const userClass = new UserClass();
+userClass.print('gg');
+// userClass.a;
 
 // ---------------------------
 
 class Animal {
     name: string;
+    age: number;
 }
 
-class Dog { 
+class Dog {
     name: string;
+    age: number;
+
     tail: boolean;
+    high: number;
+    weight: number;
+    penis: boolean;
 }
 
-const puppy: Animal = new Dog();
-puppy.name;
+const animalInstance: Animal = new Dog();
+// animalInstance.tail;
