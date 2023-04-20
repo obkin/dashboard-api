@@ -3,7 +3,7 @@ import { userRouter } from './users/users';
 import { Server } from 'http';
 import { LoggerService } from './logger/logger.service';
 
-export class App {
+class App {
     app: Express;
     server: Server;
     port: number;
@@ -25,3 +25,5 @@ export class App {
         this.logger.log(`The server started at: http://localhost:${this.port}`);
     }
 }
+
+export { App };

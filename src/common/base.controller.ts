@@ -2,7 +2,7 @@ import { LoggerService } from "../logger/logger.service";
 import { Router, Response } from 'express';
 import { IControllerRoute } from "./route.interface";
 
-export abstract class BaseController {
+abstract class BaseController {
     private readonly _router: Router;
 
     constructor(private logger: LoggerService) {
@@ -34,3 +34,5 @@ export abstract class BaseController {
         }
     }
 }
+
+export { BaseController };
