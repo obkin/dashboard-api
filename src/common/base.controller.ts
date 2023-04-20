@@ -28,7 +28,7 @@ abstract class BaseController {
 
     protected bindRoutes(routes: IControllerRoute[]) {
         for (const route of routes) {
-            this.logger.log(`[${route.method}] ${route.path}`);
+            this.logger.log(`Created controller: [${route.method}] ${route.path}`);
             const handler = route.func.bind(this);
             this.router[route.method](route.path, handler);
         }
