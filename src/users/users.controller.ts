@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { BaseController } from "../common/base.controller";
 import { LoggerService } from "../logger/logger.service";
-import { HTTPError } from "../errors/https-error.class";
+import { HTTPError } from "../errors/http-error.class";
 
 class UserController extends BaseController {
     constructor(logger: LoggerService) {
@@ -14,7 +14,7 @@ class UserController extends BaseController {
     }
 
     login(req: Request, res: Response, next: NextFunction) {
-        next(new HTTPError(401, 'authorize error'));
+        next(new HTTPError(401, 'authorize error', 'login'));
         // this.ok(res, 'login');
     }
 
