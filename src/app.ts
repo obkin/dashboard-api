@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import { Server } from 'http';
 import { LoggerService } from './logger/logger.service';
 import { UserController } from './users/users.controller';
-import { ExceptionFilter } from '../errors/exception.filter';
+import { ExceptionFilter } from './errors/exception.filter';
 
 class App {
     app: Express;
@@ -30,6 +30,7 @@ class App {
 
     useExceptionFilters() {
         this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+        this.logger.log(`Started: Exception Filter`);
     }
 
     public async init() {
