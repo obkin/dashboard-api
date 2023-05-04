@@ -1,4 +1,5 @@
 import { Logger, ISettingsParam, ILogObj } from 'tslog';
+import { ILogger } from './logger.interface';
 
 const loggerSettings = {
     displayInstanceName: false,
@@ -7,8 +8,8 @@ const loggerSettings = {
     displayFunctionName: false
 };
 
-export class LoggerService {
-    private logger: Logger<ILogObj>;
+class LoggerService implements ILogger {
+    public logger: Logger<ILogObj>;
 
     constructor() {
         this.logger = new Logger<ILogObj>(loggerSettings as ISettingsParam<ILogObj>);
@@ -27,3 +28,5 @@ export class LoggerService {
         this.logger.warn(...args);
     }
 }
+
+export { LoggerService };

@@ -8,6 +8,7 @@ class ExceptionFilter implements IExceptionFilter {
 
     constructor(logger: LoggerService) {
         this.logger = logger;
+        this.logger.log(`Started: Exception Filter`);
     }
 
     catch(err: Error | HTTPError, req: Request, res: Response, next: NextFunction) {
