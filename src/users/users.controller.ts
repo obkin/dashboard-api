@@ -3,11 +3,12 @@ import { BaseController } from "../common/base.controller";
 import { HTTPError } from "../errors/http-error.class";
 import { ILogger } from "../logger/logger.interface";
 import { inject, injectable } from "inversify";
+import { IUserController } from "./users.controller.interface";
 import { TYPES } from "../types";
 import 'reflect-metadata';
 
 @injectable()
-class UserController extends BaseController {
+class UserController extends BaseController implements IUserController {
     constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
         super(loggerService);
 

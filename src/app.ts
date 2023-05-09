@@ -7,6 +7,7 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from './types';
 import 'reflect-metadata';
 
+// Application main class
 @injectable()
 class App {
     app: Express;
