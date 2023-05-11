@@ -9,20 +9,25 @@ import { IUserController } from './users/users.controller.interface';
 import { TYPES } from './types';
 import 'reflect-metadata';
 
+interface IBootstrapReturnType {
+	app: App;
+	appContainer: Container;
+}
+
 // Dependency Injection (creating Inversify container and container module):
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-    bind<ILogger>(TYPES.ILogger).to(LoggerService);
-    bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
-    bind<IUserController>(TYPES.UserController).to(UserController);
-    bind<App>(TYPES.Application).to(App);
+	bind<ILogger>(TYPES.ILogger).to(LoggerService);
+	bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
+	bind<IUserController>(TYPES.UserController).to(UserController);
+	bind<App>(TYPES.Application).to(App);
 });
 
-function bootstrap() {
-    const appContainer = new Container();
-          appContainer.load(appBindings);
-    const app = appContainer.get<App>(TYPES.Application);
-          app.init();
-    return { appContainer, app };
+function bootstrap(): IBootstrapReturnType {
+	const appContainer = new Container();
+	appContainer.load(appBindings);
+	const app = appContainer.get<App>(TYPES.Application);
+	app.init();
+	return { appContainer, app };
 }
 
 export const { app, appContainer } = bootstrap();

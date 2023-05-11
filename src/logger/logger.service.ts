@@ -4,32 +4,32 @@ import { injectable } from 'inversify';
 import 'reflect-metadata';
 
 const loggerSettings = {
-    displayInstanceName: false,
-    displayLoggerName: false,
-    displayFilePath: 'hidden',
-    displayFunctionName: false
+	displayInstanceName: false,
+	displayLoggerName: false,
+	displayFilePath: 'hidden',
+	displayFunctionName: false,
 };
 
 @injectable()
 class LoggerService implements ILogger {
-    public logger: Logger<ILogObj>;
+	public logger: Logger<ILogObj>;
 
-    constructor() {
-        this.logger = new Logger<ILogObj>(loggerSettings as ISettingsParam<ILogObj>);
-    }
+	constructor() {
+		this.logger = new Logger<ILogObj>(loggerSettings as ISettingsParam<ILogObj>);
+	}
 
-    log(...args: unknown[]) {
-        this.logger.info(...args);
-    }
+	log(...args: unknown[]): void {
+		this.logger.info(...args);
+	}
 
-    error(...args: unknown[]) {
-        // send error to sentry / rollbar
-        this.logger.error(...args);
-    }
+	error(...args: unknown[]): void {
+		// send error to sentry / rollbar
+		this.logger.error(...args);
+	}
 
-    warn(...args: unknown[]) {
-        this.logger.warn(...args);
-    }
+	warn(...args: unknown[]): void {
+		this.logger.warn(...args);
+	}
 }
 
 export { LoggerService };
