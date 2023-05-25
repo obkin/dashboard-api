@@ -16,7 +16,7 @@ interface IBootstrapReturnType {
 	appContainer: Container;
 }
 
-// Dependency Injection (creating Inversify container and container module):
+// Dependency Injection Tree (creating Inversify container and container module):
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.ILogger).to(LoggerService);
 	bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);

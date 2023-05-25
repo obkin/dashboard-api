@@ -8,7 +8,6 @@ import { TYPES } from '../types';
 import 'reflect-metadata';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { User } from './user.entity';
 import { UserService } from './users.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
 
