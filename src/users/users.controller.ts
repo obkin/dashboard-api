@@ -48,7 +48,7 @@ class UserController extends BaseController implements IUserController {
 		if (!result) {
 			await next(new HTTPError(422, 'such user already exists', 'register'));
 		} else {
-			this.ok(res, { email: result.email });
+			this.ok(res, { email: result.email, id: result.id });
 		}
 	}
 }
