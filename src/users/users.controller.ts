@@ -42,7 +42,7 @@ class UserController extends BaseController implements IUserController {
 	): Promise<void> {
 		const result = await this.userService.validateUser(req.body);
 		if (!result) {
-			next(new HTTPError(401, 'authorize error', 'login'));
+			return next(new HTTPError(401, 'authorize error', 'login'));
 		} else {
 			this.ok(res, `logined: ${req.body.email}`);
 		}
@@ -55,7 +55,7 @@ class UserController extends BaseController implements IUserController {
 	): Promise<void> {
 		const result = await this.userService.createUser(req.body);
 		if (!result) {
-			await next(new HTTPError(422, 'such user already exists', 'register'));
+			return next(new HTTPError(422, 'such user already exists', 'register'));
 		} else {
 			this.ok(res, { email: result.email, id: result.id });
 		}
