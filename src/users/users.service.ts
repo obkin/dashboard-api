@@ -6,6 +6,7 @@ import { IConfigService } from '../config/config.service.interface';
 import { TYPES } from '../types';
 import { IUsersRepository } from './users.repository.interface';
 import { UserModel } from '@prisma/client';
+import { UserLoginDto } from './dto/user-login.dto';
 
 @injectable()
 class UserService implements IUserService {
@@ -17,16 +18,22 @@ class UserService implements IUserService {
 		const newUser = new User(email, name);
 		const salt = this.configService.get('SALT');
 		await newUser.setPassword(password, Number(salt));
-		const existedUser = await this.usersRepository.find(email);
-		if (existedUser) {
+		const existUser = await this.usersRepository.find(email);
+		if (existUser) {
 			return null;
 		} else {
 			return this.usersRepository.create(newUser);
 		}
 	}
 
-	async validateUser(): Promise<boolean> {
-		return true;
+	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
+		const existUser = await this.usersRepository.find(email);
+		if (existUser) {
+			const newUser = new User(existUser.email, existUser.name, existUser.password);
+			return newUser.comparePassword(password);
+		} else {
+			return false;
+		}
 	}
 }
 
