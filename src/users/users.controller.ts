@@ -8,14 +8,17 @@ import { TYPES } from '../types';
 import 'reflect-metadata';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { UserService } from './users.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
+import { sign } from 'jsonwebtoken';
+import { IUserService } from './users.service.interface';
+import { IConfigService } from '../config/config.service.interface';
 
 @injectable()
 class UserController extends BaseController implements IUserController {
 	constructor(
 		@inject(TYPES.ILogger) private loggerService: ILogger,
-		@inject(TYPES.UserService) private userService: UserService,
+		@inject(TYPES.UserService) private userService: IUserService,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
 	) {
 		super(loggerService);
 
@@ -44,7 +47,8 @@ class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HTTPError(401, 'authorize error', 'login'));
 		} else {
-			this.ok(res, `logined: ${req.body.email}`);
+			const jwt = await this.signJWT(req.body.email, this.configService.get('SECRET'));
+			this.ok(res, { jwt });
 		}
 	}
 
@@ -59,6 +63,28 @@ class UserController extends BaseController implements IUserController {
 		} else {
 			this.ok(res, { email: result.email, id: result.id });
 		}
+	}
+
+	private signJWT(email: string, secret: string): Promise<string> {
+		return new Promise((resolve, reject) => {
+			sign(
+				{
+					userEmail: email,
+					iat: Math.floor(Date.now() / 1000),
+				},
+				secret,
+				{
+					algorithm: 'HS256',
+				},
+				(err, token) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(token as string);
+					}
+				},
+			);
+		});
 	}
 }
 
