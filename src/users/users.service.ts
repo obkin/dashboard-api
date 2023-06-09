@@ -35,6 +35,10 @@ class UserService implements IUserService {
 			return false;
 		}
 	}
+
+	async findUser(email: string): Promise<UserModel | null> {
+		return this.usersRepository.find(email);
+	}
 }
 
 export { UserService };

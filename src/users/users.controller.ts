@@ -72,8 +72,13 @@ class UserController extends BaseController implements IUserController {
 		}
 	}
 
-	async info(req: Request, res: Response, next: NextFunction): Promise<void> {
-		this.ok(res, { email: req.user });
+	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
+		if (user) {
+			const userInfo = await this.userService.findUser(user);
+			this.ok(res, { email: userInfo?.email, id: userInfo?.id });
+		} else {
+			return next(new HTTPError(401, 'such user is not exists', 'info'));
+		}
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {
