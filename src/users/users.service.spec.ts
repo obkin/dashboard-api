@@ -51,6 +51,8 @@ beforeAll(() => {
 	usersRepository = container.get<IUsersRepository>(TYPES.UsersRepository);
 });
 
+let createdUser: UserModel | null;
+
 describe('UserService', () => {
 	it('createUser', async () => {
 		configService.get = jest.fn().mockReturnValueOnce(configServiceReturn);
@@ -62,8 +64,32 @@ describe('UserService', () => {
 				id: 1,
 			}),
 		);
-		const createdUser = await userService.createUser(userData);
+		createdUser = await userService.createUser(userData);
 		expect(createdUser?.id).toEqual(expectedUserID);
 		expect(createdUser?.password).not.toEqual(expectedUserPassword);
+	});
+	it('validateUser - success', async () => {
+		usersRepository.find = jest.fn().mockReturnValueOnce(createdUser);
+		const res = await userService.validateUser({
+			email: 'kapell123@ukr.net',
+			password: '123456',
+		});
+		expect(res).toBeTruthy();
+	});
+	it('validateUser - incorrect password', async () => {
+		usersRepository.find = jest.fn().mockReturnValueOnce(createdUser);
+		const res = await userService.validateUser({
+			email: 'kapell123@ukr.net',
+			password: '654321',
+		});
+		expect(res).toBeFalsy();
+	});
+	it('validateUser - user is not exist', async () => {
+		usersRepository.find = jest.fn().mockReturnValueOnce(null);
+		const res = await userService.validateUser({
+			email: 'kapell123@ukr.net',
+			password: '123456',
+		});
+		expect(res).toBeFalsy();
 	});
 });
